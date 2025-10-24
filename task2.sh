@@ -1,13 +1,14 @@
 #!/bin/bash
 
-THRESHOLD=90
+DIRECTORY=$1
+EXTENSION=$2
 
-USAGE=$(df / --output=pcent | tail -n 1 | tr -d ' %')
-
-# Перевіряємо, чи отримане число ($USAGE) більше або дорівнює ($THRESHOLD)
-if [ $USAGE -ge $THRESHOLD ]; then
-  echo "ПОПЕРЕДЖЕННЯ: На кореневому розділі '/' залишилося менше 10% вільного місця (використано $USAGE%)!"
-else
-  # Додамо повідомлення, якщо все добре, для наочності
-  echo "INFO: На кореневому розділі '/' достатньо місця (використано $USAGE%)."
+if [ -z "$DIRECTORY" ] || [ -z "$EXTENSION" ]; then
+  echo "Помилка: Потрібно вказати два аргументи."
+  echo "Використання: $0 <шлях_до_директорії> <розширення>"
+  exit 1
 fi
+
+COUNT=$(find "$DIRECTORY" -type f -name "*.$EXTENSION" | wc -l)
+
+echo "Directory $DIRECTORY has $COUNT files with extension .$EXTENSION."
