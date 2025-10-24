@@ -1,13 +1,10 @@
 #!/bin/bash
 
-THRESHOLD=90
+DIR_NAME=$(date +%Y-%m-%d)
 
-USAGE=$(df / --output=pcent | tail -n 1 | tr -d ' %')
-
-# Перевіряємо, чи отримане число ($USAGE) більше або дорівнює ($THRESHOLD)
-if [ $USAGE -ge $THRESHOLD ]; then
-  echo "ПОПЕРЕДЖЕННЯ: На кореневому розділі '/' залишилося менше 10% вільного місця (використано $USAGE%)!"
+if [ -d "$DIR_NAME" ]; then
+  echo "Directory exists: $DIR_NAME"
 else
-  # Додамо повідомлення, якщо все добре, для наочності
-  echo "INFO: На кореневому розділі '/' достатньо місця (використано $USAGE%)."
+  mkdir "$DIR_NAME"
+  echo "Directory created: $DIR_NAME"
 fi
